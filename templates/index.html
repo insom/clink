@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>clink</title>
+    {% if config.generate_feed %}
+    <link rel="alternate" type={% if config.feed_filename=="atom.xml"
+        %}"application/atom+xml"{% else %}"application/rss+xml"{% endif %}
+        title="RSS" href="{{ get_url(path=config.feed_filename) | safe }}">
+    {% endif %}
+    {% block extra_head %}
+    {% endblock extra_head %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+    <style>
+        html {
+            background-color: #171e1f;
+            color: #c7c7a5;
+            font-family: "Arvo", serif;
+            font-size: 150%;
+        }
+
+        body {
+            margin-left: 16%;
+            max-width: 66%;
+            margin-top: 3em;
+        }
+
+        tt {
+            font-family: "Material Symbols Outlined";
+            font-weight: normal;
+            font-size: 300%;
+        }
+
+        blockquote {
+            border-left: 3pt solid #c7c7a5;
+            padding: 3pt 1ex 3pt 1ex;
+            margin: 1ex;
+            background-color: #373c3d;
+        }
+
+        div.link {
+            padding-left: 2ex;
+        }
+
+        a {
+            color: #66d9ef;
+        }
+
+        article {
+            padding-bottom: 5em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <main>
+            {% block content %}
+            <div class="posts">
+                {% for page in paginator.pages %}
+                <article class="post">
+                    <div style="position: absolute; margin-left: -3em"><tt>{{
+                            page.extra.symbol }}</tt></div>
+                    <div class="post__summary">
+                        {{ page.content | safe }}
+                    </div>
+                    <div class="link">
+                        &rarr; <a href="{{ page.extra.link | safe }}">{{
+                            page.title | safe }}</a>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+            <nav class="pagination">
+                {% if paginator.previous %}
+                <a class="previous" href="{{ paginator.previous }}">&larr;
+                    Previous</a>
+                {% endif %}
+                {% if paginator.next %}
+                <a class="next" href="{{ paginator.next }}">Next &rarr;</a>
+                {% endif %}
+            </nav>
+            {% endblock content %}
+        </main>
+
+        {% block footer %}
+        {% endblock footer %}
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+title = "Aaron's Links"
+base_url = "https://www.insom.me.uk/C/"
+author = "Aaron Brady"
+compile_sass = false
+build_search_index = false
+generate_feed = true
+feed_filename = "rss.xml"
+
+[markdown]
+highlight_code = false
+
+[extra]
